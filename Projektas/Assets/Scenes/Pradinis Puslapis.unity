@@ -2716,6 +2716,7 @@ MonoBehaviour:
   passwordInput: {fileID: 1084392703}
   errorMessage: {fileID: 955256660}
   loginButton: {fileID: 2132431429}
+  returnButton: {fileID: 2101779842}
   camera: {fileID: 0}
   sceneToLoad: Demo
 --- !u!4 &1153706678
@@ -4741,7 +4742,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -5362,6 +5363,7 @@ MonoBehaviour:
   emailInput: {fileID: 1484432789}
   errorMessage: {fileID: 1762586357}
   registerButton: {fileID: 566179391}
+  returnButton: {fileID: 1299416684}
 --- !u!4 &1968616484
 Transform:
   m_ObjectHideFlags: 0

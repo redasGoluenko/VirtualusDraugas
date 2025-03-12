@@ -2,8 +2,8 @@
 using TMPro;
 using System.IO;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // Required for scene loading
-using System.Collections; // Required for coroutine
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LoginManager : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class LoginManager : MonoBehaviour
     public TMP_InputField passwordInput;
     public TextMeshProUGUI errorMessage;
     public Button loginButton;
+    public Button returnButton; // New return button
     public Camera camera;
     public string sceneToLoad;
 
@@ -20,6 +21,7 @@ public class LoginManager : MonoBehaviour
     {
         filePath = Application.dataPath + "/users.txt";
         loginButton.onClick.AddListener(OnLoginButtonClicked);
+        returnButton.onClick.AddListener(OnReturnButtonClicked); // Assign event
     }
 
     void OnLoginButtonClicked()
@@ -34,7 +36,6 @@ public class LoginManager : MonoBehaviour
             errorMessage.text = "Prisijungimas sėkmingas!";
             errorMessage.gameObject.SetActive(true);
 
-            // Start coroutine to wait 3 seconds and load the scene
             StartCoroutine(LoadNextScene());
         }
         else
@@ -42,6 +43,12 @@ public class LoginManager : MonoBehaviour
             errorMessage.text = "Netinkami prisijungimo duomenys!";
             errorMessage.gameObject.SetActive(true);
         }
+    }
+
+    void OnReturnButtonClicked()
+    {
+        errorMessage.text = "";
+        errorMessage.gameObject.SetActive(false);
     }
 
     bool IsValidCredentials(string username, string password)
@@ -64,7 +71,6 @@ public class LoginManager : MonoBehaviour
             {
                 string savedUsername = credentials[0].Trim();
                 string savedPassword = credentials[1].Trim();
-                string savedEmail = credentials[2].Trim();
 
                 Debug.Log("Saved username: " + savedUsername + ", Saved password: " + savedPassword);
 
@@ -77,10 +83,9 @@ public class LoginManager : MonoBehaviour
         return false;
     }
 
-    // Coroutine to wait and load the next scene
     IEnumerator LoadNextScene()
     {
-        yield return new WaitForSeconds(1f); // Wait for 1 second
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(sceneToLoad);
     }
 }

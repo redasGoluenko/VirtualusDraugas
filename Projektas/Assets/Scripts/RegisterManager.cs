@@ -10,6 +10,7 @@ public class RegisterManager : MonoBehaviour
     public TMP_InputField emailInput;      // TMP_InputField for email
     public TextMeshProUGUI errorMessage;   // TextMeshProUGUI for error message
     public Button registerButton;          // Register Button
+    public Button returnButton;            // Return Button
 
     private string filePath;
 
@@ -20,6 +21,7 @@ public class RegisterManager : MonoBehaviour
 
         // Assign the button click listener
         registerButton.onClick.AddListener(OnRegisterButtonClicked);
+        returnButton.onClick.AddListener(OnReturnButtonClicked); // Assign event
     }
 
     // Called when the Register button is clicked
@@ -47,6 +49,12 @@ public class RegisterManager : MonoBehaviour
 
         // Save the user credentials (username, password, email) to the file
         SaveUserCredentials(username, password, email);
+    }
+
+    void OnReturnButtonClicked()
+    {
+        errorMessage.text = "";
+        errorMessage.gameObject.SetActive(false);
     }
 
     // Simple email validation method (you can extend this)
