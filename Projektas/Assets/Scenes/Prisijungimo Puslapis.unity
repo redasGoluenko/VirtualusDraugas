@@ -1313,6 +1313,7 @@ MonoBehaviour:
   passwordInput: {fileID: 1113006919}
   errorMessage: {fileID: 268941527}
   loginButton: {fileID: 1496215600}
+  camera: {fileID: 0}
   sceneToLoad: Demo
 --- !u!4 &941758906
 Transform:

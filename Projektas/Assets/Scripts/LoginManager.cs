@@ -11,6 +11,7 @@ public class LoginManager : MonoBehaviour
     public TMP_InputField passwordInput;
     public TextMeshProUGUI errorMessage;
     public Button loginButton;
+    public Camera camera;
     public string sceneToLoad;
 
     private string filePath;
