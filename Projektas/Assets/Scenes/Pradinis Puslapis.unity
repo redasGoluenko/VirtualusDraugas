@@ -2001,34 +2001,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8303f92da10d5c4f8aa68fc20eda45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image1: {fileID: 97719591}
-  image2: {fileID: 1234050958}
-  image3: {fileID: 1716664933}
-  image4: {fileID: 1081312791}
-  image5: {fileID: 1130192023}
-  image6: {fileID: 624472776}
-  image7: {fileID: 955256659}
-  image8: {fileID: 501050393}
-  image9: {fileID: 2033419375}
-  image10: {fileID: 1961419102}
-  image11: {fileID: 1693468585}
-  image12: {fileID: 1487377838}
-  image13: {fileID: 1287651472}
-  image14: {fileID: 1762586356}
-  image15: {fileID: 0}
-  button1: {fileID: 786420936}
-  button2: {fileID: 1284543975}
-  button3: {fileID: 2101779840}
-  button4: {fileID: 2132431428}
-  button5: {fileID: 1299416682}
-  button6: {fileID: 566179390}
-  button7: {fileID: 0}
-  button8: {fileID: 0}
-  button9: {fileID: 2140668026}
-  inputField1: {fileID: 403483462}
-  inputField2: {fileID: 1084392702}
-  inputField3: {fileID: 2129664250}
-  inputField4: {fileID: 1484432788}
+  uiElements:
+  - {fileID: 91943784}
+  - {fileID: 671730942}
+  - {fileID: 1960899727}
   moveDistance: -1920
   moveDuration: 0
 --- !u!1 &855155281
@@ -3435,34 +3411,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8303f92da10d5c4f8aa68fc20eda45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image1: {fileID: 97719591}
-  image2: {fileID: 1234050958}
-  image3: {fileID: 1130192023}
-  image4: {fileID: 1081312791}
-  image5: {fileID: 624472776}
-  image6: {fileID: 955256659}
-  image7: {fileID: 501050393}
-  image8: {fileID: 2033419375}
-  image9: {fileID: 1961419102}
-  image10: {fileID: 1693468585}
-  image11: {fileID: 1487377838}
-  image12: {fileID: 2129664250}
-  image13: {fileID: 1287651472}
-  image14: {fileID: 1299416682}
-  image15: {fileID: 1716664933}
-  button1: {fileID: 786420936}
-  button2: {fileID: 1284543975}
-  button3: {fileID: 2101779840}
-  button4: {fileID: 2132431428}
-  button5: {fileID: 566179390}
-  button6: {fileID: 1762586356}
-  button7: {fileID: 0}
-  button8: {fileID: 0}
-  button9: {fileID: 0}
-  inputField1: {fileID: 403483462}
-  inputField2: {fileID: 1084392702}
-  inputField3: {fileID: 1484432788}
-  inputField4: {fileID: 2140668026}
+  uiElements:
+  - {fileID: 91943784}
+  - {fileID: 671730942}
+  - {fileID: 1960899727}
   moveDistance: 1920
   moveDuration: 0
 --- !u!1 &1287651471
@@ -3738,34 +3690,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8303f92da10d5c4f8aa68fc20eda45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image1: {fileID: 97719591}
-  image2: {fileID: 1234050958}
-  image3: {fileID: 786420936}
-  image4: {fileID: 1284543975}
-  image5: {fileID: 1716664933}
-  image6: {fileID: 1081312791}
-  image7: {fileID: 1130192023}
-  image8: {fileID: 403483462}
-  image9: {fileID: 1084392702}
-  image10: {fileID: 955256659}
-  image11: {fileID: 2132431428}
-  image12: {fileID: 501050393}
-  image13: {fileID: 2033419375}
-  image14: {fileID: 1961419102}
-  image15: {fileID: 1693468585}
-  button1: {fileID: 1487377838}
-  button2: {fileID: 1484432788}
-  button3: {fileID: 2140668026}
-  button4: {fileID: 1287651472}
-  button5: {fileID: 2129664250}
-  button6: {fileID: 1299416682}
-  button7: {fileID: 566179390}
-  button8: {fileID: 1762586356}
-  button9: {fileID: 624472776}
-  inputField1: {fileID: 2101779840}
-  inputField2: {fileID: 0}
-  inputField3: {fileID: 0}
-  inputField4: {fileID: 0}
+  uiElements:
+  - {fileID: 91943784}
+  - {fileID: 671730942}
+  - {fileID: 1960899727}
   moveDistance: -1920
   moveDuration: 0
 --- !u!1 &1402241950
@@ -5825,34 +5753,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8303f92da10d5c4f8aa68fc20eda45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image1: {fileID: 97719591}
-  image2: {fileID: 1234050958}
-  image3: {fileID: 786420936}
-  image4: {fileID: 1284543975}
-  image5: {fileID: 1716664933}
-  image6: {fileID: 1081312791}
-  image7: {fileID: 403483462}
-  image8: {fileID: 1084392702}
-  image9: {fileID: 624472776}
-  image10: {fileID: 2132431428}
-  image11: {fileID: 501050393}
-  image12: {fileID: 955256659}
-  image13: {fileID: 2033419375}
-  image14: {fileID: 1961419102}
-  image15: {fileID: 1693468585}
-  button1: {fileID: 1487377838}
-  button2: {fileID: 1484432788}
-  button3: {fileID: 2140668026}
-  button4: {fileID: 2129664250}
-  button5: {fileID: 1287651472}
-  button6: {fileID: 1299416682}
-  button7: {fileID: 566179390}
-  button8: {fileID: 1762586356}
-  button9: {fileID: 1130192023}
-  inputField1: {fileID: 2101779840}
-  inputField2: {fileID: 0}
-  inputField3: {fileID: 0}
-  inputField4: {fileID: 0}
+  uiElements:
+  - {fileID: 91943784}
+  - {fileID: 671730942}
+  - {fileID: 1960899727}
   moveDistance: 1920
   moveDuration: 0
 --- !u!1 &2125454935
