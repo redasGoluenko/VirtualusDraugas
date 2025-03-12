@@ -47,9 +47,15 @@ public class LoginManager : MonoBehaviour
 
     void OnReturnButtonClicked()
     {
+        // Clear input fields
+        usernameInput.text = "";
+        passwordInput.text = "";
+
+        // Hide the error message
         errorMessage.text = "";
         errorMessage.gameObject.SetActive(false);
     }
+
 
     bool IsValidCredentials(string username, string password)
     {

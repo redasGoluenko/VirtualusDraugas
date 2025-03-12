@@ -53,9 +53,15 @@ public class RegisterManager : MonoBehaviour
 
     void OnReturnButtonClicked()
     {
+        // Clear input fields
+        usernameInput.text = "";
+        passwordInput.text = "";
+
+        // Hide the error message
         errorMessage.text = "";
         errorMessage.gameObject.SetActive(false);
     }
+
 
     // Simple email validation method (you can extend this)
     bool IsValidEmail(string email)
