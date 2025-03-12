@@ -2021,13 +2021,13 @@ MonoBehaviour:
   button6: {fileID: 566179390}
   button7: {fileID: 0}
   button8: {fileID: 0}
-  button9: {fileID: 0}
+  button9: {fileID: 2140668026}
   inputField1: {fileID: 403483462}
   inputField2: {fileID: 1084392702}
   inputField3: {fileID: 2129664250}
-  inputField4: {fileID: 0}
+  inputField4: {fileID: 1484432788}
   moveDistance: -1920
-  moveDuration: 0.5
+  moveDuration: 0
 --- !u!1 &855155281
 GameObject:
   m_ObjectHideFlags: 0
@@ -3385,7 +3385,7 @@ MonoBehaviour:
   inputField3: {fileID: 1484432788}
   inputField4: {fileID: 2140668026}
   moveDistance: 1920
-  moveDuration: 0.5
+  moveDuration: 0
 --- !u!1 &1287651471
 GameObject:
   m_ObjectHideFlags: 0
@@ -3525,7 +3525,7 @@ GameObject:
   - component: {fileID: 1299416686}
   - component: {fileID: 1299416685}
   - component: {fileID: 1299416684}
-  - component: {fileID: 1299416683}
+  - component: {fileID: 1299416687}
   m_Layer: 5
   m_Name: Return Button
   m_TagString: Untagged
@@ -3553,19 +3553,6 @@ RectTransform:
   m_AnchoredPosition: {x: -868.4372, y: 455.02448}
   m_SizeDelta: {x: 182.5249, y: 169.6364}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1299416683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1299416681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76377b0187a19de4e8de88c8818cfcd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: Pradinis Puslapis
 --- !u!114 &1299416684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3610,9 +3597,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1299416683}
-        m_TargetAssemblyTypeName: RedirectToScene, Assembly-CSharp
-        m_MethodName: LoadScene
+      - m_Target: {fileID: 1299416687}
+        m_TargetAssemblyTypeName: UIElementMover, Assembly-CSharp
+        m_MethodName: MoveUILeft
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3660,6 +3647,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1299416681}
   m_CullTransparentMesh: 1
+--- !u!114 &1299416687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299416681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8303f92da10d5c4f8aa68fc20eda45c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image1: {fileID: 661730707}
+  image2: {fileID: 1853307225}
+  image3: {fileID: 786420936}
+  image4: {fileID: 1284543975}
+  image5: {fileID: 1716664933}
+  image6: {fileID: 1081312791}
+  image7: {fileID: 1130192023}
+  image8: {fileID: 403483462}
+  image9: {fileID: 1084392702}
+  image10: {fileID: 955256659}
+  image11: {fileID: 2132431428}
+  image12: {fileID: 501050393}
+  image13: {fileID: 2033419375}
+  image14: {fileID: 1961419102}
+  image15: {fileID: 1693468585}
+  button1: {fileID: 1487377838}
+  button2: {fileID: 1484432788}
+  button3: {fileID: 2140668026}
+  button4: {fileID: 1287651472}
+  button5: {fileID: 2129664250}
+  button6: {fileID: 1299416682}
+  button7: {fileID: 566179390}
+  button8: {fileID: 1762586356}
+  button9: {fileID: 624472776}
+  inputField1: {fileID: 2101779840}
+  inputField2: {fileID: 0}
+  inputField3: {fileID: 0}
+  inputField4: {fileID: 0}
+  moveDistance: -1920
+  moveDuration: 0
 --- !u!1 &1402241950
 GameObject:
   m_ObjectHideFlags: 0
@@ -5654,7 +5683,7 @@ GameObject:
   - component: {fileID: 2101779844}
   - component: {fileID: 2101779843}
   - component: {fileID: 2101779842}
-  - component: {fileID: 2101779841}
+  - component: {fileID: 2101779845}
   m_Layer: 5
   m_Name: Return Button
   m_TagString: Untagged
@@ -5682,19 +5711,6 @@ RectTransform:
   m_AnchoredPosition: {x: -811.96716, y: 413.13724}
   m_SizeDelta: {x: 295.5042, y: 253.44}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2101779841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2101779839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76377b0187a19de4e8de88c8818cfcd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneName: Pradinis Puslapis
 --- !u!114 &2101779842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5739,9 +5755,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2101779841}
-        m_TargetAssemblyTypeName: RedirectToScene, Assembly-CSharp
-        m_MethodName: LoadScene
+      - m_Target: {fileID: 2101779845}
+        m_TargetAssemblyTypeName: UIElementMover, Assembly-CSharp
+        m_MethodName: MoveUILeft
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5789,6 +5805,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101779839}
   m_CullTransparentMesh: 1
+--- !u!114 &2101779845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101779839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8303f92da10d5c4f8aa68fc20eda45c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image1: {fileID: 661730707}
+  image2: {fileID: 1853307225}
+  image3: {fileID: 786420936}
+  image4: {fileID: 1284543975}
+  image5: {fileID: 1716664933}
+  image6: {fileID: 1081312791}
+  image7: {fileID: 403483462}
+  image8: {fileID: 1084392702}
+  image9: {fileID: 624472776}
+  image10: {fileID: 2132431428}
+  image11: {fileID: 501050393}
+  image12: {fileID: 955256659}
+  image13: {fileID: 2033419375}
+  image14: {fileID: 1961419102}
+  image15: {fileID: 1693468585}
+  button1: {fileID: 1487377838}
+  button2: {fileID: 1484432788}
+  button3: {fileID: 2140668026}
+  button4: {fileID: 2129664250}
+  button5: {fileID: 1287651472}
+  button6: {fileID: 1299416682}
+  button7: {fileID: 566179390}
+  button8: {fileID: 1762586356}
+  button9: {fileID: 1130192023}
+  inputField1: {fileID: 2101779840}
+  inputField2: {fileID: 0}
+  inputField3: {fileID: 0}
+  inputField4: {fileID: 0}
+  moveDistance: 1920
+  moveDuration: 0
 --- !u!1 &2125454935
 GameObject:
   m_ObjectHideFlags: 0
