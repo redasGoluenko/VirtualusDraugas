@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1008520602067",
+    "firebase_url": "https://virtualusdraugas-4b8f5-default-rtdb.firebaseio.com",
+    "project_id": "virtualusdraugas-4b8f5",
+    "storage_bucket": "virtualusdraugas-4b8f5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008520602067:android:4495d13b7f44ad5fdc8f26",
+        "android_client_info": {
+          "package_name": "com.virtualusDraugas.firebasedb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhkYl085lfXs56uEyJWMHPvvZolWhOBy4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
