@@ -77,3 +77,158 @@ crashlytics-build.properties
 /Assets/Google/SignIn/
 /Packages/com.google.firebase/
 Projektas/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_7_0.dll
+Projektas/Assets/Editor Default Resources/Firebase.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_analytics.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_analytics.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_analytics_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_analytics_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_auth.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_auth.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_auth_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_auth_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_cloud_messaging.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_cloud_messaging.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_cloud_messaging_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_cloud_messaging_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_config.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_config.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_config_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_config_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_crashlytics.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_crashlytics.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_crashlytics_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_crashlytics_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_database.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_database.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_database_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_database_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_dynamic_links.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_dynamic_links.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_dynamic_links_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_dynamic_links_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_functions.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_functions.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_functions_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_functions_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_invites.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_invites.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_invites_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_invites_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_storage.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_storage.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/fb_storage_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/fb_storage_dark.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/firebase_lockup.png
+Projektas/Assets/Editor Default Resources/Firebase/firebase_lockup.png.meta
+Projektas/Assets/Editor Default Resources/Firebase/firebase_lockup_dark.png
+Projektas/Assets/Editor Default Resources/Firebase/firebase_lockup_dark.png.meta
+Projektas/Assets/ExternalDependencyManager.meta
+Projektas/Assets/ExternalDependencyManager/Editor.meta
+Projektas/Assets/ExternalDependencyManager/Editor/1.2.185/Google.IOSResolver.dll
+Projektas/Assets/ExternalDependencyManager/Editor/1.2.185/Google.IOSResolver.dll.meta
+Projektas/Assets/ExternalDependencyManager/Editor/1.2.185/Google.JarResolver.dll
+Projektas/Assets/ExternalDependencyManager/Editor/1.2.185/Google.JarResolver.dll.meta
+Projektas/Assets/ExternalDependencyManager/Editor/1.2.185/Google.PackageManagerResolver.dll
+Projektas/Assets/ExternalDependencyManager/Editor/1.2.185/Google.PackageManagerResolver.dll.meta
+Projektas/Assets/ExternalDependencyManager/Editor/1.2.185/Google.VersionHandlerImpl.dll
+Projektas/Assets/ExternalDependencyManager/Editor/1.2.185/Google.VersionHandlerImpl.dll.meta
+Projektas/Assets/ExternalDependencyManager/Editor/CHANGELOG.md
+Projektas/Assets/ExternalDependencyManager/Editor/CHANGELOG.md.meta
+Projektas/Assets/ExternalDependencyManager/Editor/external-dependency-manager_version-1.2.185_manifest.txt
+Projektas/Assets/ExternalDependencyManager/Editor/external-dependency-manager_version-1.2.185_manifest.txt.meta
+Projektas/Assets/ExternalDependencyManager/Editor/Google.VersionHandler.dll
+Projektas/Assets/ExternalDependencyManager/Editor/Google.VersionHandler.dll.meta
+Projektas/Assets/ExternalDependencyManager/Editor/LICENSE
+Projektas/Assets/ExternalDependencyManager/Editor/LICENSE.meta
+Projektas/Assets/ExternalDependencyManager/Editor/README.md
+Projektas/Assets/ExternalDependencyManager/Editor/README.md.meta
+Projektas/Assets/Firebase/Editor.meta
+Projektas/Assets/Firebase/Editor/AppDependencies.xml
+Projektas/Assets/Firebase/Editor/AppDependencies.xml.meta
+Projektas/Assets/Firebase/Editor/AuthDependencies.xml
+Projektas/Assets/Firebase/Editor/AuthDependencies.xml.meta
+Projektas/Assets/Firebase/Editor/DatabaseDependencies.xml
+Projektas/Assets/Firebase/Editor/DatabaseDependencies.xml.meta
+Projektas/Assets/Firebase/Editor/Firebase.Editor.dll
+Projektas/Assets/Firebase/Editor/Firebase.Editor.dll.meta
+Projektas/Assets/Firebase/Editor/FirebaseAuth_version-12.7.0_manifest.txt
+Projektas/Assets/Firebase/Editor/FirebaseAuth_version-12.7.0_manifest.txt.meta
+Projektas/Assets/Firebase/Editor/FirebaseDatabase_version-12.7.0_manifest.txt
+Projektas/Assets/Firebase/Editor/FirebaseDatabase_version-12.7.0_manifest.txt.meta
+Projektas/Assets/Firebase/Editor/generate_xml_from_google_services_json.exe
+Projektas/Assets/Firebase/Editor/generate_xml_from_google_services_json.exe.meta
+Projektas/Assets/Firebase/Editor/generate_xml_from_google_services_json.py
+Projektas/Assets/Firebase/Editor/generate_xml_from_google_services_json.py.meta
+Projektas/Assets/Firebase/Editor/network_request.exe
+Projektas/Assets/Firebase/Editor/network_request.exe.meta
+Projektas/Assets/Firebase/Editor/network_request.py
+Projektas/Assets/Firebase/Editor/network_request.py.meta
+Projektas/Assets/Firebase/m2repository.meta
+Projektas/Assets/Firebase/m2repository/com.meta
+Projektas/Assets/Firebase/m2repository/com/google.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.7.0.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.7.0/firebase-app-unity-12.7.0.pom
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.7.0/firebase-app-unity-12.7.0.pom.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.7.0/firebase-app-unity-12.7.0.srcaar
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/12.7.0/firebase-app-unity-12.7.0.srcaar.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/maven-metadata.xml
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-app-unity/maven-metadata.xml.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-auth-unity.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-auth-unity/12.7.0.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-auth-unity/12.7.0/firebase-auth-unity-12.7.0.pom
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-auth-unity/12.7.0/firebase-auth-unity-12.7.0.pom.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-auth-unity/12.7.0/firebase-auth-unity-12.7.0.srcaar
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-auth-unity/12.7.0/firebase-auth-unity-12.7.0.srcaar.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-auth-unity/maven-metadata.xml
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-auth-unity/maven-metadata.xml.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-database-unity.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-database-unity/12.7.0.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-database-unity/12.7.0/firebase-database-unity-12.7.0.pom
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-database-unity/12.7.0/firebase-database-unity-12.7.0.pom.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-database-unity/12.7.0/firebase-database-unity-12.7.0.srcaar
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-database-unity/12.7.0/firebase-database-unity-12.7.0.srcaar.meta
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-database-unity/maven-metadata.xml
+Projektas/Assets/Firebase/m2repository/com/google/firebase/firebase-database-unity/maven-metadata.xml.meta
+Projektas/Assets/Firebase/Plugins.meta
+Projektas/Assets/Firebase/Plugins/Firebase.App.dll
+Projektas/Assets/Firebase/Plugins/Firebase.App.dll.meta
+Projektas/Assets/Firebase/Plugins/Firebase.Auth.dll
+Projektas/Assets/Firebase/Plugins/Firebase.Auth.dll.meta
+Projektas/Assets/Firebase/Plugins/Firebase.Database.dll
+Projektas/Assets/Firebase/Plugins/Firebase.Database.dll.meta
+Projektas/Assets/Firebase/Plugins/Firebase.Platform.dll
+Projektas/Assets/Firebase/Plugins/Firebase.Platform.dll.meta
+Projektas/Assets/Firebase/Plugins/Firebase.TaskExtension.dll
+Projektas/Assets/Firebase/Plugins/Firebase.TaskExtension.dll.meta
+Projektas/Assets/Firebase/Plugins/Google.MiniJson.dll
+Projektas/Assets/Firebase/Plugins/Google.MiniJson.dll.meta
+Projektas/Assets/Firebase/Plugins/iOS.meta
+Projektas/Assets/Firebase/Plugins/iOS/Firebase.App.dll
+Projektas/Assets/Firebase/Plugins/iOS/Firebase.App.dll.meta
+Projektas/Assets/Firebase/Plugins/iOS/Firebase.Auth.dll
+Projektas/Assets/Firebase/Plugins/iOS/Firebase.Auth.dll.meta
+Projektas/Assets/Firebase/Plugins/iOS/Firebase.Database.dll
+Projektas/Assets/Firebase/Plugins/iOS/Firebase.Database.dll.meta
+Projektas/Assets/Firebase/Plugins/x86_64.meta
+Projektas/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_7_0.bundle
+Projektas/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_7_0.bundle.meta
+Projektas/Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_7_0.dll.meta
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Bushes/Bush_01.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Bushes/Bush_02.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Bushes/Bush_03.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Flowers/Flower.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Flowers/FlowerMeadow.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Grass/Grass_01.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Grass/Grass_02.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Grass/Grass_03.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Plants/Plant.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Waterplants/Reeds_01.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Waterplants/Reeds_02.mat
+Projektas/Assets/Idyllic Fantasy Nature/Materials/Waterplants/Reeds_03.mat
+Projektas/Assets/Plugins.meta
+Projektas/Assets/Plugins/iOS.meta
+Projektas/Assets/Plugins/iOS/Firebase.meta
+Projektas/Assets/Plugins/tvOS.meta
+Projektas/Assets/Plugins/tvOS/Firebase.meta
