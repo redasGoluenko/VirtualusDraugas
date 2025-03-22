@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Pradinis Puslapis.unity
     guid: eb3f5ba0147ed4f4289dbdf52bcd1383
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Prisijungimo Puslapis.unity
     guid: d34b6c97aa8922048b7d42942bf306c8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Registracijos Puslapis.unity
     guid: 4912fda679d8901458f806d58629b765
   - enabled: 1

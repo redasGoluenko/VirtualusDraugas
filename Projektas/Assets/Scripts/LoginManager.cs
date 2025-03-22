@@ -1,85 +1,116 @@
 ﻿using UnityEngine;
-using TMPro;
-using System.IO;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement; // Required for scene loading
-using System.Collections; // Required for coroutine
+using UnityEngine.SceneManagement;  // To load scenes
+using UnityEngine.UI;              // To work with UI elements like Button
+using TMPro;                       // For TMP_InputField
+using Firebase;
+using Firebase.Database;
+using Firebase.Extensions;  // To handle async tasks
 
 public class LoginManager : MonoBehaviour
 {
-    public TMP_InputField usernameInput;
-    public TMP_InputField passwordInput;
-    public TextMeshProUGUI errorMessage;
-    public Button loginButton;
-    public string sceneToLoad;
+    // Assign these in the inspector
+    public TMP_InputField nameInput;    // Input field for the name (not surname)
+    public TMP_InputField passwordInput; // Input field for the password
+    public TMP_Text messageText;         // Text field for displaying error/success messages
+    public Button returnButton;          // Button for clearing the fields
 
-    private string filePath;
+    private DatabaseReference dbReference; // Firebase reference
 
-    void Start()
+    private void Start()
     {
-        filePath = Application.dataPath + "/users.txt";
-        loginButton.onClick.AddListener(OnLoginButtonClicked);
+        // Ensure Firebase is initialized
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
+            FirebaseApp app = FirebaseApp.DefaultInstance;
+            dbReference = FirebaseDatabase.GetInstance(app).RootReference; // Initialize the reference to Firebase           
+        });
+
+        // Set the return button to call ClearFields when clicked
+        returnButton.onClick.AddListener(ClearFields);
     }
 
-    void OnLoginButtonClicked()
+    // Login function
+    public void Login()
     {
-        string username = usernameInput.text;
+        // Get the name and password entered by the user
+        string name = nameInput.text;
         string password = passwordInput.text;
 
-        Debug.Log("Login attempt with username: " + username + " and password: " + password);
-
-        if (IsValidCredentials(username, password))
+        // Check if both fields are filled out
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(password))
         {
-            errorMessage.text = "Prisijungimas sėkmingas!";
-            errorMessage.gameObject.SetActive(true);
+            SetMessage("Vardas ar slaptažodis neužpildyti.", true);  // Show error message
+            return;
+        }
 
-            // Start coroutine to wait 3 seconds and load the scene
-            StartCoroutine(LoadNextScene());
-        }
-        else
-        {
-            errorMessage.text = "Netinkami prisijungimo duomenys!";
-            errorMessage.gameObject.SetActive(true);
-        }
+        // Start the login check
+        CheckLogin(name, password);
     }
 
-    bool IsValidCredentials(string username, string password)
+    // Function to check login credentials against Firebase Database
+    private void CheckLogin(string name, string password)
     {
-        if (!File.Exists(filePath))
+        dbReference.Child("users").OrderByChild("name").EqualTo(name).GetValueAsync().ContinueWithOnMainThread(task =>
         {
-            Debug.LogError("File does not exist at path: " + filePath);
-            return false;
-        }
-
-        string[] lines = File.ReadAllLines(filePath);
-
-        foreach (string line in lines)
-        {
-            string[] credentials = line.Split(':');
-
-            Debug.Log("Checking line: " + line);
-
-            if (credentials.Length == 3)
+            if (task.IsCompleted && !task.IsFaulted)
             {
-                string savedUsername = credentials[0].Trim();
-                string savedPassword = credentials[1].Trim();
-                string savedEmail = credentials[2].Trim();
+                DataSnapshot snapshot = task.Result;
 
-                Debug.Log("Saved username: " + savedUsername + ", Saved password: " + savedPassword);
-
-                if (savedUsername == username && savedPassword == password)
+                // Check if we found a user with this name
+                if (snapshot.Exists)
                 {
-                    return true;
+                    bool loginSuccess = false;
+                    foreach (var user in snapshot.Children)
+                    {
+                        // Compare password from the database with the entered password
+                        string storedPassword = user.Child("password").Value.ToString();
+                        if (storedPassword == password)
+                        {
+                            // Login successful
+                            loginSuccess = true;
+                            break;
+                        }
+                    }
+
+                    // If login is successful, load the Demo scene
+                    if (loginSuccess)
+                    {
+                        SetMessage("Prisijugimas sėkmingas!", false);  // Show success message
+                        SceneManager.LoadScene("Demo");
+                    }
+                    else
+                    {
+                        // If password doesn't match, show error
+                        SetMessage("Prisijugimas nesėkmingas: neteisingas slaptažodis.", true);  // Show error message
+                    }
+                }
+                else
+                {
+                    // If no user with that name is found
+                    SetMessage("Prisijugimas nesėkmingas: naudotojas nerastas.", true);  // Show error message
                 }
             }
-        }
-        return false;
+            else
+            {
+                // Handle the case where the task failed (network issue, etc.)
+                SetMessage("Klaida teikiant duomenis: " + task.Exception, true);  // Show error message
+            }
+        });
     }
 
-    // Coroutine to wait and load the next scene
-    IEnumerator LoadNextScene()
+    // This function sets the message text and controls the color (red for error, green for success)
+    private void SetMessage(string message, bool isError)
     {
-        yield return new WaitForSeconds(1f); // Wait for 1 second
-        SceneManager.LoadScene(sceneToLoad);
+        messageText.text = message;      
+    }
+
+    // Function to clear the fields and error message
+    private void ClearFields()
+    {
+        // Clear the name and password input fields if they have text
+        nameInput.text = "";
+        passwordInput.text = "";
+
+        // Clear the error message
+        SetMessage("", false); // Clears the message (not showing anything)
     }
 }

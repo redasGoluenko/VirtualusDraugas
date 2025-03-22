@@ -1,75 +1,117 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Firebase;
+using Firebase.Database;
+using Firebase.Extensions;
+using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
-using System.IO;
-using UnityEngine.UI; // Required for Button
+using System.Text.RegularExpressions;
 
 public class RegisterManager : MonoBehaviour
 {
-    public TMP_InputField usernameInput;   // TMP_InputField for username
-    public TMP_InputField passwordInput;   // TMP_InputField for password
-    public TMP_InputField emailInput;      // TMP_InputField for email
-    public TextMeshProUGUI errorMessage;   // TextMeshProUGUI for error message
-    public Button registerButton;          // Register Button
+    public TMP_InputField gmail;
+    public TMP_InputField username;
+    public TMP_InputField password;
 
-    private string filePath;
+    public TMP_Text messageText;
+    public Button returnButton;
+
+    private string userID;
+    private DatabaseReference dbReference;
 
     void Start()
     {
-        // Set the file path to save the data in the project folder
-        filePath = Application.dataPath + "/users.txt";
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
+            FirebaseApp app = FirebaseApp.DefaultInstance;
 
-        // Assign the button click listener
-        registerButton.onClick.AddListener(OnRegisterButtonClicked);
+            app.Options.DatabaseUrl = new System.Uri("https://your-project-id.firebaseio.com/");
+
+            dbReference = FirebaseDatabase.GetInstance(app).RootReference;
+
+            userID = SystemInfo.deviceUniqueIdentifier;
+
+            Debug.Log("Firebase Initialized and Database Reference Set");
+        });
+
+        returnButton.onClick.AddListener(ClearFields);
     }
 
-    // Called when the Register button is clicked
-    void OnRegisterButtonClicked()
+    public void CreateUser()
     {
-        string username = usernameInput.text;
-        string password = passwordInput.text;
-        string email = emailInput.text;
-
-        // Check if any of the fields are empty
-        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(email))
+        if (string.IsNullOrEmpty(gmail.text) || string.IsNullOrEmpty(username.text) || string.IsNullOrEmpty(password.text))
         {
-            errorMessage.text = "Visi laukai turi būti užpildyti!";
-            errorMessage.gameObject.SetActive(true);
+            SetMessage("Visi laukai turi būti užpildyti!", true);
             return;
         }
 
-        // Optional: Basic Email Validation (you can use a more advanced regex for email validation)
-        if (!IsValidEmail(email))
+        if (!IsValidEmail(gmail.text))
         {
-            errorMessage.text = "Netinkamas elektroninio pašto formatas!";
-            errorMessage.gameObject.SetActive(true);
+            SetMessage("Prašome įvesti tinkamą el. pašto formatą!", true);
             return;
         }
 
-        // Save the user credentials (username, password, email) to the file
-        SaveUserCredentials(username, password, email);
+        User newUser = new User(gmail.text, username.text, password.text);
+        string json = JsonUtility.ToJson(newUser);
+
+        DatabaseReference newUserRef = dbReference.Child("users").Push();
+
+        newUserRef.SetRawJsonValueAsync(json).ContinueWithOnMainThread(task => {
+            if (task.IsCompleted)
+            {
+                SetMessage("Naudotojas priregistruotas sėkmingai!", false);
+            }
+            else
+            {
+                SetMessage("Klaida kuriant naudotoją: " + task.Exception.Message, true);
+            }
+        });
     }
 
-    // Simple email validation method (you can extend this)
-    bool IsValidEmail(string email)
+    public void FetchUsers()
     {
-        // Simple email check (e.g., must contain '@' and a dot)
-        return email.Contains("@") && email.Contains(".");
+        dbReference.Child("users").GetValueAsync().ContinueWithOnMainThread(task => {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+
+                if (snapshot.Exists)
+                {
+                    foreach (var user in snapshot.Children)
+                    {
+                        Debug.Log("User ID: " + user.Key);
+                        Debug.Log("User Data: " + user.GetRawJsonValue());
+                    }
+                    SetMessage("Naudotojai pateikti sėkmingai!", false);
+                }
+                else
+                {
+                    SetMessage("No users found.", true);
+                }
+            }
+            else
+            {
+                SetMessage("Error fetching users: " + task.Exception.Message, true);
+            }
+        });
     }
 
-    // Save the username, password, and email to the users.txt file
-    void SaveUserCredentials(string username, string password, string email)
+    private bool IsValidEmail(string email)
     {
-        // Check if the file exists
-        if (!File.Exists(filePath))
-        {
-            File.Create(filePath).Close(); // Create file if it doesn't exist
-        }
+        string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        return Regex.IsMatch(email, emailPattern);
+    }
 
-        // Write the username, password, and email to the file (with a delimiter like ':')
-        File.AppendAllText(filePath, username + ":" + password + ":" + email + "\n");
+    private void SetMessage(string message, bool isError)
+    {
+        messageText.text = message;
+    }
 
-        // Provide feedback to the user
-        errorMessage.text = "Registracija sėkminga!";
-        errorMessage.gameObject.SetActive(true);
+    private void ClearFields()
+    {
+        gmail.text = "";
+        username.text = "";
+        password.text = "";
+        messageText.text = "";
     }
 }
