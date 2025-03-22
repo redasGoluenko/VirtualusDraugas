@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Debug = UnityEngine.Debug;
+using System.Diagnostics; 
 using System.IO;
 using System.Text;
 using UnityEngine;
@@ -13,7 +15,7 @@ public class VoiceAssistantController : MonoBehaviour
     public string openAI_API_Key = "YOUR_OPENAI_API_KEY_HERE";
 
     [Header("Recording Settings")]
-    [Tooltip("Sample rate for microphone recording (e.g., 16000 or 44100)")]
+    [Tooltip("Sample rate for microphone recording (e.g., 44100)")]
     public int sampleRate = 44100;
 
     [Tooltip("Key to toggle recording on/off")]
@@ -26,11 +28,9 @@ public class VoiceAssistantController : MonoBehaviour
     private bool isRecording = false;
     private AudioClip recordedClip;
     private string micDevice;
-    private float recordStartTime;
 
     void Start()
     {
-        // Use the first available microphone
         if (Microphone.devices.Length > 0)
         {
             micDevice = Microphone.devices[0];
@@ -58,35 +58,39 @@ public class VoiceAssistantController : MonoBehaviour
             return;
 
         isRecording = true;
-        // Start recording; we record for 300 seconds (max) but will stop manually
         recordedClip = Microphone.Start(micDevice, false, 300, sampleRate);
-        recordStartTime = Time.time;
         Debug.Log("Recording started.");
     }
 
     void StopRecordingAndProcess()
     {
+        // Get the actual recorded sample count before stopping the microphone.
+        int recordedSampleCount = Microphone.GetPosition(micDevice);
         isRecording = false;
         Microphone.End(micDevice);
-        Debug.Log("Recording stopped.");
+        Debug.Log("Recording stopped. Recorded samples: " + recordedSampleCount);
 
-        // Directly use the entire recorded clip without trimming
-        byte[] wavData = WavUtility.FromAudioClip(recordedClip);
+        // Convert only the recorded portion of the AudioClip to WAV bytes.
+        byte[] wavData = WavUtilityOptimized.FromAudioClip(recordedClip, recordedSampleCount);
         if (wavData == null || wavData.Length == 0)
         {
             Debug.LogError("WAV conversion failed.");
             return;
         }
 
-        // Run the AI pipeline (Whisper -> ChatGPT -> TTS)
         StartCoroutine(RunAIPipeline(wavData));
     }
 
     IEnumerator RunAIPipeline(byte[] wavData)
     {
-        // 1. Transcribe using Whisper (language set to Lithuanian "lt")
+        Stopwatch stopwatch = new Stopwatch();
+
+        // 1. Transcribe using Whisper.
+        stopwatch.Start();
         string transcription = "";
         yield return StartCoroutine(TranscribeAudio(wavData, result => transcription = result));
+        stopwatch.Stop();
+        Debug.Log("Transcription time: " + stopwatch.ElapsedMilliseconds + " ms");
         if (string.IsNullOrEmpty(transcription))
         {
             Debug.LogError("Transcription failed.");
@@ -94,9 +98,13 @@ public class VoiceAssistantController : MonoBehaviour
         }
         Debug.Log("Transcribed text: " + transcription);
 
-        // 2. Get response from ChatGPT
+        // 2. Get response from ChatGPT.
+        stopwatch.Reset();
+        stopwatch.Start();
         string chatResponse = "";
         yield return StartCoroutine(ChatWithGPT(transcription, result => chatResponse = result));
+        stopwatch.Stop();
+        Debug.Log("ChatGPT time: " + stopwatch.ElapsedMilliseconds + " ms");
         if (string.IsNullOrEmpty(chatResponse))
         {
             Debug.LogError("ChatGPT response is empty.");
@@ -104,17 +112,25 @@ public class VoiceAssistantController : MonoBehaviour
         }
         Debug.Log("ChatGPT response: " + chatResponse);
 
-        // 3. Convert ChatGPT text to speech via TTS
+        // 3. Convert ChatGPT text to speech (TTS).
+        stopwatch.Reset();
+        stopwatch.Start();
         byte[] ttsAudioData = null;
         yield return StartCoroutine(ConvertTextToSpeech(chatResponse, result => ttsAudioData = result));
+        stopwatch.Stop();
+        Debug.Log("TTS conversion time: " + stopwatch.ElapsedMilliseconds + " ms");
         if (ttsAudioData == null || ttsAudioData.Length == 0)
         {
             Debug.LogError("TTS failed to produce audio.");
             yield break;
         }
 
-        // 4. Play the TTS audio
+        // 4. Play the TTS audio.
+        stopwatch.Reset();
+        stopwatch.Start();
         yield return StartCoroutine(PlayAudioFromBytes(ttsAudioData));
+        stopwatch.Stop();
+        Debug.Log("Audio playback time: " + stopwatch.ElapsedMilliseconds + " ms");
     }
 
     IEnumerator TranscribeAudio(byte[] audioData, System.Action<string> onComplete)
@@ -123,7 +139,6 @@ public class VoiceAssistantController : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("model", "whisper-1");
         form.AddBinaryData("file", audioData, "recording.wav", "audio/wav");
-        // Allow Lithuanian speech recognition:
         form.AddField("language", "lt");
 
         using (UnityWebRequest www = UnityWebRequest.Post(url, form))
@@ -151,7 +166,7 @@ public class VoiceAssistantController : MonoBehaviour
         ChatGPTRequest chatRequest = new ChatGPTRequest
         {
             model = "gpt-3.5-turbo",
-            messages = new List<Message>()
+            messages = new List<Message>
             {
                 new Message { role = "user", content = userInput }
             },

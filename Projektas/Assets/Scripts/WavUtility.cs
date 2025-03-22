@@ -1,61 +1,59 @@
-using UnityEngine;
 using System;
+using System.IO;
 using System.Text;
+using UnityEngine;
 
-public static class WavUtility
+public static class WavUtilityOptimized
 {
-    public static byte[] FromAudioClip(AudioClip clip)
+    // New method that takes the actual recorded sample count.
+    public static byte[] FromAudioClip(AudioClip clip, int recordedSamples)
     {
         if (clip == null)
         {
-            Debug.LogError("WavUtility: AudioClip is null.");
+            Debug.LogError("WavUtilityOptimized: AudioClip is null.");
             return null;
         }
-
-        float[] samples = new float[clip.samples * clip.channels];
+        
+        int channels = clip.channels;
+        int sampleCount = recordedSamples * channels; // Process only the recorded samples.
+        float[] samples = new float[sampleCount];
         clip.GetData(samples, 0);
 
-        short[] intData = new short[samples.Length];
-        for (int i = 0; i < samples.Length; i++)
+        // Convert float samples [-1, 1] to 16-bit PCM samples.
+        byte[] pcmData = new byte[sampleCount * 2]; // 2 bytes per sample.
+        int offset = 0;
+        for (int i = 0; i < sampleCount; i++)
         {
-            intData[i] = (short)(samples[i] * short.MaxValue);
+            // Clamp sample values to ensure they fit in 16-bit.
+            short pcmSample = (short)Mathf.Clamp(samples[i] * short.MaxValue, short.MinValue, short.MaxValue);
+            pcmData[offset++] = (byte)(pcmSample & 0xff);
+            pcmData[offset++] = (byte)((pcmSample >> 8) & 0xff);
         }
-
-        int bytesPerSample = 2;
-        int subChunk2Size = intData.Length * bytesPerSample;
-        int fileSize = 44 + subChunk2Size;
-
-        byte[] wavBytes = new byte[fileSize];
-
-        WriteBytes(wavBytes, 0, Encoding.UTF8.GetBytes("RIFF"));
-        BitConverter.GetBytes(fileSize - 8).CopyTo(wavBytes, 4);
-        WriteBytes(wavBytes, 8, Encoding.UTF8.GetBytes("WAVE"));
-        WriteBytes(wavBytes, 12, Encoding.UTF8.GetBytes("fmt "));
-        BitConverter.GetBytes(16).CopyTo(wavBytes, 16);
-        BitConverter.GetBytes((short)1).CopyTo(wavBytes, 20);
-        BitConverter.GetBytes((short)clip.channels).CopyTo(wavBytes, 22);
-        BitConverter.GetBytes(clip.frequency).CopyTo(wavBytes, 24);
-        BitConverter.GetBytes(clip.frequency * clip.channels * bytesPerSample).CopyTo(wavBytes, 28);
-        BitConverter.GetBytes((short)(clip.channels * bytesPerSample)).CopyTo(wavBytes, 32);
-        BitConverter.GetBytes((short)(bytesPerSample * 8)).CopyTo(wavBytes, 34);
-        WriteBytes(wavBytes, 36, Encoding.UTF8.GetBytes("data"));
-        BitConverter.GetBytes(subChunk2Size).CopyTo(wavBytes, 40);
-
-        int offset = 44;
-        for (int i = 0; i < intData.Length; i++)
+        
+        using (MemoryStream stream = new MemoryStream())
+        using (BinaryWriter writer = new BinaryWriter(stream))
         {
-            BitConverter.GetBytes(intData[i]).CopyTo(wavBytes, offset);
-            offset += 2;
-        }
-
-        return wavBytes;
-    }
-
-    private static void WriteBytes(byte[] buffer, int offset, byte[] bytesToWrite)
-    {
-        for (int i = 0; i < bytesToWrite.Length; i++)
-        {
-            buffer[offset + i] = bytesToWrite[i];
+            // RIFF header.
+            writer.Write(Encoding.ASCII.GetBytes("RIFF"));
+            writer.Write(36 + pcmData.Length);
+            writer.Write(Encoding.ASCII.GetBytes("WAVE"));
+            
+            // fmt subchunk.
+            writer.Write(Encoding.ASCII.GetBytes("fmt "));
+            writer.Write(16); // Subchunk1Size for PCM.
+            writer.Write((short)1); // AudioFormat (1 = PCM).
+            writer.Write((short)channels);
+            writer.Write(clip.frequency);
+            writer.Write(clip.frequency * channels * 2); // ByteRate.
+            writer.Write((short)(channels * 2)); // BlockAlign.
+            writer.Write((short)16); // Bits per sample.
+            
+            // data subchunk.
+            writer.Write(Encoding.ASCII.GetBytes("data"));
+            writer.Write(pcmData.Length);
+            writer.Write(pcmData);
+            
+            return stream.ToArray();
         }
     }
 }
