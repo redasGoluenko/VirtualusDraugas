@@ -75,7 +75,7 @@ public class LoginManager : MonoBehaviour
                     if (loginSuccess)
                     {
                         SetMessage("Prisijugimas sėkmingas!", false);  // Show success message
-                        SceneManager.LoadScene("Demo");
+                        //SceneManager.LoadScene("Demo");
                     }
                     else
                     {
