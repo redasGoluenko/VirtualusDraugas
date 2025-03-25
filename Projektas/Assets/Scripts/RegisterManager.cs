@@ -47,11 +47,11 @@ public class RegisterManager : MonoBehaviour
         string salt = GenerateSalt();
         string hashedPassword = HashPassword(password.text, salt);
         string createdAt = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"); // Get current time in UTC
+        string prompt = "unassigned"; // Initial value
 
         DatabaseReference newUserRef = dbReference.Child("users").Push();
         string userId = newUserRef.Key;
 
-        // Save user data with timestamp
         User newUser = new User(gmail.text, username.text, hashedPassword + ":" + salt);
         string json = JsonUtility.ToJson(newUser);
 
@@ -60,6 +60,8 @@ public class RegisterManager : MonoBehaviour
             if (task.IsCompleted)
             {
                 dbReference.Child("users").Child(userId).Child("createdAt").SetValueAsync(createdAt);
+                dbReference.Child("users").Child(userId).Child("prompt").SetValueAsync(prompt); // Store the prompt
+
                 SetMessage("Naudotojas priregistruotas sėkmingai!", false);
             }
             else

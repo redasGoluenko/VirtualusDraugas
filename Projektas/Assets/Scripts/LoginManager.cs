@@ -55,6 +55,7 @@ public class LoginManager : MonoBehaviour
                 {
                     bool loginSuccess = false;
                     string accountCreatedDate = "";
+                    string promptValue = "unassigned";
 
                     foreach (var user in snapshot.Children)
                     {
@@ -70,10 +71,14 @@ public class LoginManager : MonoBehaviour
                             {
                                 loginSuccess = true;
 
-                                // Fetch account creation date
                                 if (user.HasChild("createdAt"))
                                 {
                                     accountCreatedDate = user.Child("createdAt").Value.ToString();
+                                }
+
+                                if (user.HasChild("prompt"))
+                                {
+                                    promptValue = user.Child("prompt").Value.ToString();
                                 }
 
                                 break;
@@ -83,18 +88,17 @@ public class LoginManager : MonoBehaviour
 
                     if (loginSuccess)
                     {
-                        SetMessage($"Prisijugimas sėkmingas!\nPaskyra sukurta: {accountCreatedDate}", false);
+                        SetMessage($"Prisijungimas sėkmingas!\nPaskyra sukurta: {accountCreatedDate}\nPrompt: {promptValue}", false);
                         UIElementMover.MoveUILeft();
-                        //SceneManager.LoadScene("Demo");
                     }
                     else
                     {
-                        SetMessage("Prisijugimas nesėkmingas: neteisingas slaptažodis.", true);
+                        SetMessage("Prisijungimas nesėkmingas: neteisingas slaptažodis.", true);
                     }
                 }
                 else
                 {
-                    SetMessage("Prisijugimas nesėkmingas: naudotojas nerastas.", true);
+                    SetMessage("Prisijungimas nesėkmingas: naudotojas nerastas.", true);
                 }
             }
             else
