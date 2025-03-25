@@ -8,6 +8,8 @@ using Firebase.Extensions;  // To handle async tasks
 
 public class LoginManager : MonoBehaviour
 {
+    public UIElementMover UIElementMover;
+
     // Assign these in the inspector
     public TMP_InputField nameInput;    // Input field for the name (not surname)
     public TMP_InputField passwordInput; // Input field for the password
@@ -75,6 +77,7 @@ public class LoginManager : MonoBehaviour
                     if (loginSuccess)
                     {
                         SetMessage("Prisijugimas sėkmingas!", false);  // Show success message
+                        UIElementMover.MoveUILeft();  // Move the UI elements to the left
                         //SceneManager.LoadScene("Demo");
                     }
                     else

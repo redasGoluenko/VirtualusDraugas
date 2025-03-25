@@ -4580,6 +4580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d02bcb5ca297447acf55938e262750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIElementMover: {fileID: 2132431432}
   nameInput: {fileID: 403483463}
   passwordInput: {fileID: 1084392703}
   messageText: {fileID: 955256660}
@@ -7270,18 +7271,6 @@ MonoBehaviour:
       - m_Target: {fileID: 1466442197}
         m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
         m_MethodName: Login
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2132431432}
-        m_TargetAssemblyTypeName: UIElementMover, Assembly-CSharp
-        m_MethodName: MoveUILeft
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
