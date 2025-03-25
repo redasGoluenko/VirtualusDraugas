@@ -1,54 +1,48 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;  // To load scenes
-using UnityEngine.UI;              // To work with UI elements like Button
-using TMPro;                       // For TMP_InputField
+﻿using System;
+using System.Security.Cryptography;
+using System.Text;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 using Firebase;
 using Firebase.Database;
-using Firebase.Extensions;  // To handle async tasks
+using Firebase.Extensions;
 
 public class LoginManager : MonoBehaviour
 {
     public UIElementMover UIElementMover;
+    public TMP_InputField nameInput;
+    public TMP_InputField passwordInput;
+    public TMP_Text messageText;
+    public Button returnButton;
 
-    // Assign these in the inspector
-    public TMP_InputField nameInput;    // Input field for the name (not surname)
-    public TMP_InputField passwordInput; // Input field for the password
-    public TMP_Text messageText;         // Text field for displaying error/success messages
-    public Button returnButton;          // Button for clearing the fields
-
-    private DatabaseReference dbReference; // Firebase reference
+    private DatabaseReference dbReference;
 
     private void Start()
     {
-        // Ensure Firebase is initialized
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
             FirebaseApp app = FirebaseApp.DefaultInstance;
-            dbReference = FirebaseDatabase.GetInstance(app).RootReference; // Initialize the reference to Firebase           
+            dbReference = FirebaseDatabase.GetInstance(app).RootReference;
         });
 
-        // Set the return button to call ClearFields when clicked
         returnButton.onClick.AddListener(ClearFields);
     }
 
-    // Login function
     public void Login()
     {
-        // Get the name and password entered by the user
         string name = nameInput.text;
         string password = passwordInput.text;
 
-        // Check if both fields are filled out
         if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(password))
         {
-            SetMessage("Vardas ar slaptažodis neužpildyti.", true);  // Show error message
+            SetMessage("Vardas ar slaptažodis neužpildyti.", true);
             return;
         }
 
-        // Start the login check
         CheckLogin(name, password);
     }
 
-    // Function to check login credentials against Firebase Database
     private void CheckLogin(string name, string password)
     {
         dbReference.Child("users").OrderByChild("name").EqualTo(name).GetValueAsync().ContinueWithOnMainThread(task =>
@@ -57,63 +51,70 @@ public class LoginManager : MonoBehaviour
             {
                 DataSnapshot snapshot = task.Result;
 
-                // Check if we found a user with this name
                 if (snapshot.Exists)
                 {
                     bool loginSuccess = false;
                     foreach (var user in snapshot.Children)
                     {
-                        // Compare password from the database with the entered password
-                        string storedPassword = user.Child("password").Value.ToString();
-                        if (storedPassword == password)
+                        string storedData = user.Child("password").Value.ToString();
+                        string[] parts = storedData.Split(':');
+
+                        if (parts.Length == 2)
                         {
-                            // Login successful
-                            loginSuccess = true;
-                            break;
+                            string storedHashedPassword = parts[0];
+                            string storedSalt = parts[1];
+
+                            // Hash the entered password with the stored salt and compare
+                            if (storedHashedPassword == HashPassword(password, storedSalt))
+                            {
+                                loginSuccess = true;
+                                break;
+                            }
                         }
                     }
 
-                    // If login is successful, load the Demo scene
                     if (loginSuccess)
                     {
-                        SetMessage("Prisijugimas sėkmingas!", false);  // Show success message
-                        UIElementMover.MoveUILeft();  // Move the UI elements to the left
+                        SetMessage("Prisijugimas sėkmingas!", false);
+                        UIElementMover.MoveUILeft();
                         //SceneManager.LoadScene("Demo");
                     }
                     else
                     {
-                        // If password doesn't match, show error
-                        SetMessage("Prisijugimas nesėkmingas: neteisingas slaptažodis.", true);  // Show error message
+                        SetMessage("Prisijugimas nesėkmingas: neteisingas slaptažodis.", true);
                     }
                 }
                 else
                 {
-                    // If no user with that name is found
-                    SetMessage("Prisijugimas nesėkmingas: naudotojas nerastas.", true);  // Show error message
+                    SetMessage("Prisijugimas nesėkmingas: naudotojas nerastas.", true);
                 }
             }
             else
             {
-                // Handle the case where the task failed (network issue, etc.)
-                SetMessage("Klaida teikiant duomenis: " + task.Exception, true);  // Show error message
+                SetMessage("Klaida teikiant duomenis: " + task.Exception, true);
             }
         });
     }
 
-    // This function sets the message text and controls the color (red for error, green for success)
-    private void SetMessage(string message, bool isError)
+    private string HashPassword(string password, string salt)
     {
-        messageText.text = message;      
+        using (SHA256 sha256 = SHA256.Create())
+        {
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password + salt);
+            byte[] hashBytes = sha256.ComputeHash(passwordBytes);
+            return Convert.ToBase64String(hashBytes);
+        }
     }
 
-    // Function to clear the fields and error message
+    private void SetMessage(string message, bool isError)
+    {
+        messageText.text = message;
+    }
+
     private void ClearFields()
     {
-        // Clear the name and password input fields if they have text
         nameInput.text = "";
         passwordInput.text = "";
-
-        // Clear the error message
-        SetMessage("", false); // Clears the message (not showing anything)
+        SetMessage("", false);
     }
 }

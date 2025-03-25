@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Security.Cryptography;
+using System.Text;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
@@ -17,21 +18,13 @@ public class RegisterManager : MonoBehaviour
     public TMP_Text messageText;
     public Button returnButton;
 
-    private string userID;
     private DatabaseReference dbReference;
 
     void Start()
     {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
             FirebaseApp app = FirebaseApp.DefaultInstance;
-
-            app.Options.DatabaseUrl = new System.Uri("https://your-project-id.firebaseio.com/");
-
             dbReference = FirebaseDatabase.GetInstance(app).RootReference;
-
-            userID = SystemInfo.deviceUniqueIdentifier;
-
-            Debug.Log("Firebase Initialized and Database Reference Set");
         });
 
         returnButton.onClick.AddListener(ClearFields);
@@ -51,7 +44,14 @@ public class RegisterManager : MonoBehaviour
             return;
         }
 
-        User newUser = new User(gmail.text, username.text, password.text);
+        // Generate salt
+        string salt = GenerateSalt();
+
+        // Hash the password with salt
+        string hashedPassword = HashPassword(password.text, salt);
+
+        // Store salt + hashed password in Firebase
+        User newUser = new User(gmail.text, username.text, hashedPassword + ":" + salt);
         string json = JsonUtility.ToJson(newUser);
 
         DatabaseReference newUserRef = dbReference.Child("users").Push();
@@ -68,38 +68,30 @@ public class RegisterManager : MonoBehaviour
         });
     }
 
-    public void FetchUsers()
-    {
-        dbReference.Child("users").GetValueAsync().ContinueWithOnMainThread(task => {
-            if (task.IsCompleted)
-            {
-                DataSnapshot snapshot = task.Result;
-
-                if (snapshot.Exists)
-                {
-                    foreach (var user in snapshot.Children)
-                    {
-                        Debug.Log("User ID: " + user.Key);
-                        Debug.Log("User Data: " + user.GetRawJsonValue());
-                    }
-                    SetMessage("Naudotojai pateikti sėkmingai!", false);
-                }
-                else
-                {
-                    SetMessage("No users found.", true);
-                }
-            }
-            else
-            {
-                SetMessage("Error fetching users: " + task.Exception.Message, true);
-            }
-        });
-    }
-
     private bool IsValidEmail(string email)
     {
         string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
         return Regex.IsMatch(email, emailPattern);
+    }
+
+    private string GenerateSalt()
+    {
+        byte[] saltBytes = new byte[16];
+        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+        {
+            rng.GetBytes(saltBytes);
+        }
+        return Convert.ToBase64String(saltBytes);
+    }
+
+    private string HashPassword(string password, string salt)
+    {
+        using (SHA256 sha256 = SHA256.Create())
+        {
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(password + salt);
+            byte[] hashBytes = sha256.ComputeHash(passwordBytes);
+            return Convert.ToBase64String(hashBytes);
+        }
     }
 
     private void SetMessage(string message, bool isError)
