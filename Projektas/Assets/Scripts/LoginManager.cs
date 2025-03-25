@@ -54,6 +54,8 @@ public class LoginManager : MonoBehaviour
                 if (snapshot.Exists)
                 {
                     bool loginSuccess = false;
+                    string accountCreatedDate = "";
+
                     foreach (var user in snapshot.Children)
                     {
                         string storedData = user.Child("password").Value.ToString();
@@ -64,10 +66,16 @@ public class LoginManager : MonoBehaviour
                             string storedHashedPassword = parts[0];
                             string storedSalt = parts[1];
 
-                            // Hash the entered password with the stored salt and compare
                             if (storedHashedPassword == HashPassword(password, storedSalt))
                             {
                                 loginSuccess = true;
+
+                                // Fetch account creation date
+                                if (user.HasChild("createdAt"))
+                                {
+                                    accountCreatedDate = user.Child("createdAt").Value.ToString();
+                                }
+
                                 break;
                             }
                         }
@@ -75,7 +83,7 @@ public class LoginManager : MonoBehaviour
 
                     if (loginSuccess)
                     {
-                        SetMessage("Prisijugimas sėkmingas!", false);
+                        SetMessage($"Prisijugimas sėkmingas!\nPaskyra sukurta: {accountCreatedDate}", false);
                         UIElementMover.MoveUILeft();
                         //SceneManager.LoadScene("Demo");
                     }

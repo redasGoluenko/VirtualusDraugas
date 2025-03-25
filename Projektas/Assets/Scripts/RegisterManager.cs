@@ -44,21 +44,22 @@ public class RegisterManager : MonoBehaviour
             return;
         }
 
-        // Generate salt
         string salt = GenerateSalt();
-
-        // Hash the password with salt
         string hashedPassword = HashPassword(password.text, salt);
+        string createdAt = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"); // Get current time in UTC
 
-        // Store salt + hashed password in Firebase
+        DatabaseReference newUserRef = dbReference.Child("users").Push();
+        string userId = newUserRef.Key;
+
+        // Save user data with timestamp
         User newUser = new User(gmail.text, username.text, hashedPassword + ":" + salt);
         string json = JsonUtility.ToJson(newUser);
 
-        DatabaseReference newUserRef = dbReference.Child("users").Push();
-
-        newUserRef.SetRawJsonValueAsync(json).ContinueWithOnMainThread(task => {
+        dbReference.Child("users").Child(userId).SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
+        {
             if (task.IsCompleted)
             {
+                dbReference.Child("users").Child(userId).Child("createdAt").SetValueAsync(createdAt);
                 SetMessage("Naudotojas priregistruotas sėkmingai!", false);
             }
             else
