@@ -5,22 +5,28 @@ using System.Collections;
 
 public class GenderButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Image targetImage; // Drag the UI Image for the target here
-    public Image secondaryImage; // New Image for alpha fading effect
+    public Image targetImage;
+    public Image secondaryImage;
+    public Image target2;
+    public Image target3;
+
     private Vector3 originalScale;
 
-    // Separate transition speeds for each image
-    public float targetImageTransitionSpeed = 0.2f; // Speed for targetImage fade in/out
-    public float secondaryImageTransitionSpeed = 0.3f; // Speed for secondaryImage fade in/out
+    public float targetImageTransitionSpeed = 0.2f;
+    public float secondaryImageTransitionSpeed = 0.3f;
+    public float additionalImageTransitionSpeed = 0.3f;
 
-    // Max alpha for secondaryImage (can be set from Inspector)
     [Range(0f, 1f)]
-    public float secondaryImageMaxAlpha = 1f; // Max alpha for secondaryImage
+    public float secondaryImageMaxAlpha = 1f;
+    [Range(0f, 1f)]
+    public float additionalImagesMaxAlpha = 1f;
 
-    public float hoverScaleMultiplier = 1.1f; // Scale multiplier on hover
+    public float hoverScaleMultiplier = 1.1f;
     private Color originalColor;
 
-    private Coroutine fadeCoroutine; // To track fade coroutine
+    private Coroutine fadeCoroutineSecondary;
+    private Coroutine fadeCoroutineTarget2;
+    private Coroutine fadeCoroutineTarget3;
 
     void Start()
     {
@@ -28,16 +34,22 @@ public class GenderButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointer
         {
             originalScale = targetImage.rectTransform.localScale;
             originalColor = targetImage.color;
-            originalColor.a = 240f / 255f; // Set initial alpha for targetImage to 240
+            originalColor.a = 240f / 255f;
             targetImage.color = originalColor;
         }
 
-        // Ensure secondaryImage starts with alpha 0
-        if (secondaryImage != null)
+        SetInitialAlpha(secondaryImage, 0f);
+        SetInitialAlpha(target2, 0.9f);
+        SetInitialAlpha(target3, 0.9f);
+    }
+
+    private void SetInitialAlpha(Image image, float initialAlpha)
+    {
+        if (image != null)
         {
-            Color secondaryImageColor = secondaryImage.color;
-            secondaryImageColor.a = 0f; // Set initial alpha to 0
-            secondaryImage.color = secondaryImageColor;
+            Color imageColor = image.color;
+            imageColor.a = initialAlpha;
+            image.color = imageColor;
         }
     }
 
@@ -47,17 +59,12 @@ public class GenderButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointer
         {
             StopAllCoroutines();
             StartCoroutine(ScaleOverTime(targetImage.rectTransform, originalScale * hoverScaleMultiplier, targetImageTransitionSpeed));
-            StartCoroutine(FadeAlpha(targetImage, 255f / 255f, targetImageTransitionSpeed)); // Fade in targetImage
+            StartCoroutine(FadeAlpha(targetImage, 1f, targetImageTransitionSpeed));
         }
 
-        if (secondaryImage != null)
-        {
-            if (fadeCoroutine != null)
-            {
-                StopCoroutine(fadeCoroutine); // Stop the previous fade effect
-            }
-            fadeCoroutine = StartCoroutine(FadeAlpha(secondaryImage, secondaryImageMaxAlpha, secondaryImageTransitionSpeed)); // Fade in secondaryImage to max alpha
-        }
+        fadeCoroutineSecondary = StartFadeCoroutine(fadeCoroutineSecondary, secondaryImage, secondaryImageMaxAlpha, secondaryImageTransitionSpeed);
+        fadeCoroutineTarget2 = StartFadeCoroutine(fadeCoroutineTarget2, target2, additionalImagesMaxAlpha, additionalImageTransitionSpeed);
+        fadeCoroutineTarget3 = StartFadeCoroutine(fadeCoroutineTarget3, target3, additionalImagesMaxAlpha, additionalImageTransitionSpeed);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -66,17 +73,25 @@ public class GenderButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointer
         {
             StopAllCoroutines();
             StartCoroutine(ScaleOverTime(targetImage.rectTransform, originalScale, targetImageTransitionSpeed));
-            StartCoroutine(FadeAlpha(targetImage, 240f / 255f, targetImageTransitionSpeed)); // Fade out targetImage
+            StartCoroutine(FadeAlpha(targetImage, 240f / 255f, targetImageTransitionSpeed));
         }
 
-        if (secondaryImage != null)
+        fadeCoroutineSecondary = StartFadeCoroutine(fadeCoroutineSecondary, secondaryImage, 0f, secondaryImageTransitionSpeed);
+        fadeCoroutineTarget2 = StartFadeCoroutine(fadeCoroutineTarget2, target2, 0.5f, additionalImageTransitionSpeed);
+        fadeCoroutineTarget3 = StartFadeCoroutine(fadeCoroutineTarget3, target3, 0.5f, additionalImageTransitionSpeed);
+    }
+
+    private Coroutine StartFadeCoroutine(Coroutine fadeCoroutine, Image image, float targetAlpha, float speed)
+    {
+        if (image != null)
         {
             if (fadeCoroutine != null)
             {
-                StopCoroutine(fadeCoroutine); // Stop the previous fade effect
+                StopCoroutine(fadeCoroutine);
             }
-            fadeCoroutine = StartCoroutine(FadeAlpha(secondaryImage, 0f, secondaryImageTransitionSpeed)); // Fade out secondaryImage to alpha 0
+            return StartCoroutine(FadeAlpha(image, targetAlpha, speed));
         }
+        return null;
     }
 
     private IEnumerator ScaleOverTime(Transform target, Vector3 targetScale, float duration)
@@ -95,6 +110,8 @@ public class GenderButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointer
 
     private IEnumerator FadeAlpha(Image image, float targetAlpha, float duration)
     {
+        if (image == null) yield break;
+
         float elapsedTime = 0f;
         Color startColor = image.color;
         float startAlpha = startColor.a;
