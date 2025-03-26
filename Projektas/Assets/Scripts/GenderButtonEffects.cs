@@ -39,8 +39,8 @@ public class GenderButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointer
         }
 
         SetInitialAlpha(secondaryImage, 0f);
-        SetInitialAlpha(target2, 0.9f);
-        SetInitialAlpha(target3, 0.9f);
+        SetInitialAlpha(target2, 0.95f);
+        SetInitialAlpha(target3, 0.95f);
     }
 
     private void SetInitialAlpha(Image image, float initialAlpha)
@@ -77,8 +77,8 @@ public class GenderButtonEffects : MonoBehaviour, IPointerEnterHandler, IPointer
         }
 
         fadeCoroutineSecondary = StartFadeCoroutine(fadeCoroutineSecondary, secondaryImage, 0f, secondaryImageTransitionSpeed);
-        fadeCoroutineTarget2 = StartFadeCoroutine(fadeCoroutineTarget2, target2, 0.5f, additionalImageTransitionSpeed);
-        fadeCoroutineTarget3 = StartFadeCoroutine(fadeCoroutineTarget3, target3, 0.5f, additionalImageTransitionSpeed);
+        fadeCoroutineTarget2 = StartFadeCoroutine(fadeCoroutineTarget2, target2, 0.8f, additionalImageTransitionSpeed);
+        fadeCoroutineTarget3 = StartFadeCoroutine(fadeCoroutineTarget3, target3, 0.8f, additionalImageTransitionSpeed);
     }
 
     private Coroutine StartFadeCoroutine(Coroutine fadeCoroutine, Image image, float targetAlpha, float speed)
