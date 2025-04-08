@@ -68,6 +68,7 @@ namespace IdyllicFantasyNature
             else
             {
                 _movementSpeed = 4f;
+                _jumpHeight = 1.5f;
             }
             
         }
