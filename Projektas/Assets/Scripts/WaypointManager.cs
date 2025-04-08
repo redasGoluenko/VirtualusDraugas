@@ -10,10 +10,10 @@ public class WaypointManager : MonoBehaviour
     public float rotationSpeed;  // Staèiø pasukimø greitis laipsniais per sekundæ
     public bool isLoop;
     public bool isRandom;
-    public bool isMoving;
+    public bool isMoving;  
 
     public Animator playerAnim;
-    public Rigidbody rb; // Priskirk Rigidbody per Inspector arba per GetComponent
+    public Rigidbody rb; // Priskirk Rigidbody per Inspector arba per GetComponent  
 
     void Start()
     {
@@ -28,8 +28,13 @@ public class WaypointManager : MonoBehaviour
 
     public void StartMoving()
     {
-        playerAnim.SetBool("walk", true);
-        Debug.Log("Walk parameter set to: " + playerAnim.GetBool("walk"));
+        if (playerAnim != null)
+        {
+            playerAnim.enabled = true;  // Ensure Animator is enabled
+            playerAnim.SetBool("walk", true); // Set the walk parameter to true
+            Debug.Log("Walk parameter set to: " + playerAnim.GetBool("walk"));
+        }
+
         waypointIndex = 0;
         isMoving = true;
     }
@@ -84,4 +89,17 @@ public class WaypointManager : MonoBehaviour
             }
         }
     }
+    public void StopMoving()
+    {
+        isMoving = false;
+
+        if (playerAnim != null)
+        {
+            playerAnim.enabled = false;  // Disable the Animator to stop all animations
+        }
+
+        Debug.Log("Movement and all animations stopped.");
+    }
+
+
 }
