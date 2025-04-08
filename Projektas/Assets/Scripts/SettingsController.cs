@@ -5,6 +5,7 @@ using UnityEngine;
 public class SettingsController : MonoBehaviour
 {
     private bool isActive = false; // Track UI state
+    public KeyCode toggleKey = KeyCode.Plus; // Key to toggle UI visibility
 
     private void Start()
     {
@@ -17,7 +18,7 @@ public class SettingsController : MonoBehaviour
     void Update()
     {
         // Check if the "+" key is pressed
-        if (Input.GetKeyDown(KeyCode.Plus) || Input.GetKeyDown(KeyCode.KeypadPlus))
+        if (Input.GetKeyDown(toggleKey))
         {
             ToggleUI();
         }
