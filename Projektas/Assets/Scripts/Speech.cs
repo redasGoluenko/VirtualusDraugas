@@ -25,6 +25,9 @@ public class VoiceAssistantController : MonoBehaviour
     [Tooltip("AudioSource to play TTS audio")]
     public AudioSource audioSource;
 
+    // Reference to the ChatCacheManager
+    public ChatCacheManager chatCacheManager;
+
     private bool isRecording = false;
     private AudioClip recordedClip;
     private string micDevice;
@@ -98,6 +101,12 @@ public class VoiceAssistantController : MonoBehaviour
         }
         Debug.Log("Transcribed text: " + transcription);
 
+        // -> Add ONLY the user message to cache
+        if (chatCacheManager != null)
+        {
+            chatCacheManager.AddMessageToCache("User: " + transcription);
+        }
+
         // 2. Get response from ChatGPT.
         stopwatch.Reset();
         stopwatch.Start();
@@ -111,6 +120,9 @@ public class VoiceAssistantController : MonoBehaviour
             yield break;
         }
         Debug.Log("ChatGPT response: " + chatResponse);
+
+        // (Optional) You can display or process the assistant's response as needed.
+        // Note: We are NOT caching the assistant's response.
 
         // 3. Convert ChatGPT text to speech (TTS).
         stopwatch.Reset();
@@ -131,8 +143,18 @@ public class VoiceAssistantController : MonoBehaviour
         yield return StartCoroutine(PlayAudioFromBytes(ttsAudioData));
         stopwatch.Stop();
         Debug.Log("Audio playback time: " + stopwatch.ElapsedMilliseconds + " ms");
+
+        // For testing purposes, you can trigger EndConversation on a different key press.
+        // If desired, you could remove this call here and have EndConversation triggered separately.
+        if (chatCacheManager != null)
+        {
+            chatCacheManager.EndConversation();
+        }
     }
 
+    // -----------------------------
+    // API Request Functions
+    // -----------------------------
     IEnumerator TranscribeAudio(byte[] audioData, System.Action<string> onComplete)
     {
         string url = "https://api.openai.com/v1/audio/transcriptions";
@@ -160,17 +182,19 @@ public class VoiceAssistantController : MonoBehaviour
         }
     }
 
-    IEnumerator ChatWithGPT(string userInput, System.Action<string> onComplete)
+    public IEnumerator ChatWithGPT(string userInput, System.Action<string> onComplete)
     {
         string url = "https://api.openai.com/v1/chat/completions";
+        // Include a system prompt to guide the model's behavior.
         ChatGPTRequest chatRequest = new ChatGPTRequest
         {
             model = "gpt-3.5-turbo",
             messages = new List<Message>
             {
+                new Message { role = "system", content = "You are a conversational assistant. When given a user's message, respond directly and concisely based solely on that input." },
                 new Message { role = "user", content = userInput }
             },
-            max_tokens = 200
+            max_tokens = 500
         };
 
         string jsonData = JsonConvert.SerializeObject(chatRequest);
@@ -203,6 +227,7 @@ public class VoiceAssistantController : MonoBehaviour
             }
         }
     }
+
 
     IEnumerator ConvertTextToSpeech(string text, System.Action<byte[]> onComplete)
     {
@@ -259,7 +284,6 @@ public class VoiceAssistantController : MonoBehaviour
     }
 }
 
-// --- Data Classes ---
 [System.Serializable]
 public class ChatGPTRequest
 {
