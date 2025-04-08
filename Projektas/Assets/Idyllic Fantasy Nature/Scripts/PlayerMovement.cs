@@ -11,10 +11,12 @@ namespace IdyllicFantasyNature
         [SerializeField] private float _runMultiplier;
         [SerializeField] private float _gravity = -9.81f;
         [Range(1f, 20f)]
-        [SerializeField] private float _jumpHeight;
+        [SerializeField] private float _jumpHeight;      
 
         private CharacterController characterController;
         Vector3 _controllerVelocity;
+
+        public bool PhoonMode = false;
 
         // Start is called before the first frame update
         void Start()
@@ -52,10 +54,22 @@ namespace IdyllicFantasyNature
             }
 
             // the controller is able to run
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) || PhoonMode)
             {
                 characterController.Move(movement * Time.deltaTime * _runMultiplier);
             }
+
+            // keep adding to movement speed while spacebar is being held and reset if its released
+            if (Input.GetKey(KeyCode.Space) && PhoonMode)
+            {
+                _movementSpeed += Time.deltaTime;
+                _jumpHeight += Time.deltaTime / 4;
+            }
+            else
+            {
+                _movementSpeed = 4f;
+            }
+            
         }
     }
 }
