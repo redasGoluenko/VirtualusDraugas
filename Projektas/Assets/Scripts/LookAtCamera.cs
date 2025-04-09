@@ -31,6 +31,7 @@ public class LookAtCamera : MonoBehaviour
         // If the camera is in range and the object is not already tracking, start tracking
         if (distance <= lookRange && distance > minLookRange)
         {
+            waypointManager.playerAnim.SetBool("walk", false); // Stop the animation when the camera is in range
             flag2 = true;
             if (!flag)
             {
@@ -70,6 +71,8 @@ public class LookAtCamera : MonoBehaviour
         }
         else
         {
+            waypointManager.playerAnim.enabled = true; // Ensure Animator is enabled
+            waypointManager.playerAnim.SetBool("walk", true); // Resume the animation when the camera is out of range
             flag2 = false;
             if (flag)
             {

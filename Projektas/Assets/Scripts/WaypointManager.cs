@@ -94,12 +94,20 @@ public class WaypointManager : MonoBehaviour
         isMoving = false;
 
         if (playerAnim != null)
-        {
-            playerAnim.enabled = false;  // Disable the Animator to stop all animations
+        {          
+            StartCoroutine(DisableAnimatorAfterDelay(0.3f)); // Disable animator after a delay
         }
 
         Debug.Log("Movement and all animations stopped.");
     }
 
-
+    private IEnumerator DisableAnimatorAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (playerAnim != null)
+        {
+            playerAnim.enabled = false;
+            Debug.Log("Animator disabled after delay.");
+        }
+    }
 }
